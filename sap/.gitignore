@@ -3,3 +3,4 @@ obj-*
 *.obj
 *.o
 *.hex
+*.elf
