@@ -21,6 +21,7 @@
  */
 
 #include <libgen.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -119,20 +120,32 @@ int initGL(int w, int h) {
 
   hd44780_gl_init();
 
-
-
   return 1;
 }
 
 int main(int argc, char *argv[]) {
+  bool debug = false;
+  const char *program = NULL;
+
   if (argc < 2) {
     printf(
         "No hex / elf provided. Please provide a filename as an argument.\n");
     return 1;
   }
 
-  const char *fname = argv[1];
-  FILE *file = fopen(fname, "r");
+  for (int i = 1; i < argc; ++i) {
+    if ((strcmp(argv[i], "-d") == 0) || (strcmp(argv[i], "--debug") == 0)) {
+      debug = true;
+    } else if ((strcmp(argv[i], "-h") == 0) ||
+               (strcmp(argv[i], "--help") == 0)) {
+      printf("Usage: %s [-d] [-h] [filename]\n", argv[0]);
+      return 0;
+    } else {
+      program = argv[i];
+    }
+  }
+
+  FILE *file = fopen(program, "r");
 
   if (!file) {
     printf("File does not exist.\n");
@@ -147,9 +160,9 @@ int main(int argc, char *argv[]) {
   strcpy(f.mmcu, "atmega328p");
   f.frequency = 8000000;
 
-  sim_setup_firmware(fname, AVR_SEGMENT_OFFSET_FLASH, &f, fname);
+  sim_setup_firmware(program, AVR_SEGMENT_OFFSET_FLASH, &f, program);
 
-  printf("firmware %s f=%d mmcu=%s\n", fname, (int)f.frequency, f.mmcu);
+  printf("firmware %s f=%d mmcu=%s\n", program, (int)f.frequency, f.mmcu);
 
   avr = avr_make_mcu_by_name(f.mmcu);
   if (!avr) {
@@ -197,10 +210,17 @@ int main(int argc, char *argv[]) {
   int pixsize = 3;
 
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-  glutInitWindowSize(w * pixsize, (h * pixsize) );
+  glutInitWindowSize(w * pixsize, (h * pixsize));
   window = glutCreateWindow("Press 'q' to quit");
 
   initGL(w * pixsize, h * pixsize);
+
+  avr->gdb_port = 1234;
+  if (debug) {
+    avr->state = cpu_Stopped;
+    avr_gdb_init(avr);
+    printf("avr-gdb -q -n -ex 'target remote 127.0.0.1:%d'\n", avr->gdb_port);
+  }
 
   pthread_t run;
   pthread_create(&run, NULL, avr_run_thread, NULL);

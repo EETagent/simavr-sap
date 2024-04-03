@@ -38,7 +38,7 @@ all: obj ${target}
 asm: ${asm_program}.hex
 
 run: ${target} asm
-	./${OBJ}/${target}.elf ${asm_program}.hex -m atmega328p
+	./${OBJ}/${target}.elf ${asm_program}.hex
 
 include ${simavr}/Makefile.common
 
