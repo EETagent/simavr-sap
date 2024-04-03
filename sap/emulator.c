@@ -40,7 +40,6 @@
 #endif
 #include <pthread.h>
 
-#include "ac_input.h"
 #include "hd44780_glut.h"
 
 // float pixsize = 16;
@@ -48,7 +47,6 @@ int window;
 
 avr_t *avr = NULL;
 avr_vcd_t vcd_file;
-ac_input_t ac_input;
 hd44780_t hd44780;
 
 int color = 0;
@@ -172,10 +170,7 @@ int main(int argc, char *argv[]) {
 
   avr_init(avr);
   avr_load_firmware(avr, &f);
-  ac_input_init(avr, &ac_input);
-  avr_connect_irq(ac_input.irq + IRQ_AC_OUT,
-                  avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('D'), 2));
-
+  
   hd44780_init(avr, &hd44780, 16, 2);
 
   /* Connect Data Lines to Port D, 4-7 */
