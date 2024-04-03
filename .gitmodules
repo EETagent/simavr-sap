@@ -1,0 +1,8 @@
+[submodule "avrdude"]
+	path = avrdude
+	url = https://github.com/avrdudes/avrdude.git
+	branch = main
+[submodule "avra"]
+	path = avra
+	url = https://github.com/Ro5bert/avra.git
+	branch = master
