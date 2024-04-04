@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release 🚀
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          draft: true
+          prerelease: false
+          generate_release_notes: false
+
+  build_release:
+    name: Build Release ⚒️
+    needs: create_release
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            release_suffix: ubuntu
+          - os: macos-latest
+            release_suffix: mac
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout 🚚
+        uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
+      - name: Run Linux Build 🐧
+        if: matrix.os == 'ubuntu-latest'
+        run: echo "Ubuntu Latest" > release_ubuntu
+
+      - name: Run Mac Build 🍎
+        if: matrix.os == 'macos-latest'
+        run: echo "MacOS Latest" > release_mac
+
+      - name: Release 📂
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.create_release.outputs.tag-name }}
+          files: release_${{ matrix.release_suffix }}
