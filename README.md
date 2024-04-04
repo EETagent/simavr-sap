@@ -1,6 +1,8 @@
 simavr_sap_emulator - Atmel AVR atmega328p simulator for FIT SAP LCD 1602 keypad board
 ======
 
+<img width="631" alt="image" src="https://github.com/EETagent/simavr-sap-experiment/assets/20557318/ef75870d-84ce-4088-942b-073e04b58874">
+
 ## Compiling ASM code using avra (avrasm2 is also supported)
 
 ```sh
@@ -71,4 +73,4 @@ sudo apt-get install avrdude avra
 
 ## More Info
 
-Check README.simavr.md for more info on the simulator
+Check [README.simavr.md](https://github.com/EETagent/simavr-sap-experiment/blob/master/README.simavr.md) for more info on the simulator
