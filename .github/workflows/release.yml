@@ -57,6 +57,9 @@ jobs:
           make
           cd ..
           mv avra/src/avra $RELEASE_DIR/avra
+          
+          # assembly files
+          cp -r sap/asm $RELEASE_DIR 
 
           zip -r simavr_sap_${{ matrix.release_suffix }}.zip  $RELEASE_DIR
 
@@ -87,6 +90,9 @@ jobs:
           make
           cd ..
           mv avrdude/src/avrdude $RELEASE_DIR/avrdude
+
+          # assembly files
+          cp -r sap/asm $RELEASE_DIR 
 
           zip -r simavr_sap_${{ matrix.release_suffix }}.zip $RELEASE_DIR
 
