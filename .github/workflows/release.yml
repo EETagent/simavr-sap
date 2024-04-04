@@ -58,7 +58,7 @@ jobs:
           cd ..
           mv avra/src/avra $RELEASE_DIR/avra
 
-          zip -r simavr_sap_${{ matrix.release_suffix }}.zip simavr_sap
+          zip -r simavr_sap_${{ matrix.release_suffix }}.zip  $RELEASE_DIR
 
       - name: Run Mac Build 🍎
         if: matrix.os == 'macos-14'
@@ -67,7 +67,7 @@ jobs:
 
           # simavr emulator
           brew tap osx-cross/avr
-          brew install avr-gcc@12
+          brew install avr-gcc@12 libelf
           make clean
           make
           mkdir -p $RELEASE_DIR
@@ -80,7 +80,7 @@ jobs:
           cd ..
           mv avra/src/avra $RELEASE_DIR/avra
 
-          zip -r simavr_sap_${{ matrix.release_suffix }}.zip simavr_sap
+          zip -r simavr_sap_${{ matrix.release_suffix }}.zip $RELEASE_DIR
 
       - name: Release 📂
         uses: softprops/action-gh-release@v2
