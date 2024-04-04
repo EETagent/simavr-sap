@@ -82,6 +82,22 @@ CMD + SHIFT + B now builds active .asm file
   }
 ```
 
+## GDB
+
+```sh
+simavr_sap_emulator program.hex -d
+```
+
+```sh
+avr-gdb -q -n -ex 'target remote 127.0.0.1:1234'
+```
+
+### Printing registers
+
+```gdb
+(gdb) info registers
+```
+
 ## macOS
 
 ### Building
