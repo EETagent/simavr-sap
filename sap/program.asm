@@ -1,15 +1,13 @@
 .include "asm/m328Pdef.inc"
 
-; podprogramy pro praci s displejem
-.org 0x1000 ; <1>
-.include "asm/printlib.inc"
-
 ; Zacatek programu - po resetu
 .org 0
     jmp start
 
+; podprogramy pro praci s displejem
+.include "asm/printlib.inc"
+
 ; Zacatek programu - hlavni program
-.org 0x100
 start:
     ; Inicializace displeje
     call init_disp
