@@ -42,6 +42,46 @@ end: jmp end        ; Zastavime program - nekonecna smycka
 simavr_sap_emulator program.hex
 ```
 
+## VSCode bindings
+
+.vscode/tasks.json
+
+CMD + SHIFT + B now builds active .asm file
+
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Assembler",
+        "type": "shell",
+        "command": "avra ${file}",
+        "problemMatcher": {
+          "base": "$gcc",
+          "fileLocation": [
+            "relative",
+          ]
+        },
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      },
+      {
+        "label": "Emulate",
+        "type": "shell",
+        "command": "simavr_sap_emulator ${fileDirname}/${fileBasenameNoExtension}.hex",
+        "problemMatcher": [],
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        }
+      }
+    ]
+  }
+```
+
 ## macOS
 
 ### Building
