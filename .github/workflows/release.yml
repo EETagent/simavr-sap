@@ -45,6 +45,7 @@ jobs:
 
           # simavr emulator
           sudo apt install -y build-essential gcc-avr avr-libc
+          sudo apt install -y freeglut3-dev libelf-dev
           make clean
           make
           mkdir -p $RELEASE_DIR
@@ -65,7 +66,8 @@ jobs:
           export RELEASE_DIR=simavr_sap_${{ matrix.release_suffix }}
 
           # simavr emulator
-          brew install avr-gcc
+          brew tap osx-cross/avr
+          brew install avr-gcc@12
           make clean
           make
           mkdir -p $RELEASE_DIR
