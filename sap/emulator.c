@@ -170,12 +170,23 @@ int main(int argc, char *argv[]) {
 
   avr_init(avr);
   avr_load_firmware(avr, &f);
-  
+
   hd44780_init(avr, &hd44780, 16, 2);
+
+  // ; Shield pinout:
+  // ; UNO   AVR	    LCD
+  // ; D4	PD4	    D4
+  // ; D5	PD5	    D5
+  // ; D6	PD6	    D6
+  // ; D7	PD7	    D7
+  // ; D8	PB0	    RS
+  // ; D9	PB1	    E
+  // ; D10	PB2	    Backlight
+  // ; A0	ADC0	    Buttons
 
   /* Connect Data Lines to Port D, 4-7 */
   /* These are bidirectional too */
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; ++i) {
     avr_irq_t *iavr = avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('D'), 4 + i);
     avr_irq_t *ilcd = hd44780.irq + IRQ_HD44780_D4 + i;
     // AVR -> LCD
