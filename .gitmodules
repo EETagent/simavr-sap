@@ -6,3 +6,7 @@
 	path = avra
 	url = https://github.com/Ro5bert/avra.git
 	branch = master
+[submodule "gdb-dashboard"]
+	path = gdb-dashboard
+	url = https://github.com/cyrus-and/gdb-dashboard
+	branch = master
