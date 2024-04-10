@@ -94,10 +94,69 @@ simavr_sap_emulator program.hex -d
 avr-gdb -q -n -ex 'target remote 127.0.0.1:1234'
 ```
 
-### Printing registers
+### GDB Dashboard
+
+<img width="1091" alt="gdb Dashboard" src="https://github.com/EETagent/simavr-sap/assets/20557318/ceb9eec7-b2b9-4904-8a74-2911b335f9b3">
+
+
+### Setup
+
+```sh
+wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
+# without -n and .gdbinit in $home or (gdb) source .gdbinit at runtime
+avr-gdb -q -ex 'target remote 127.0.0.1:1234'
+```
+
+#### Run dashboard
 
 ```gdb
-(gdb) info registers
+(gdb) dashboard
+```
+
+#### Print next 200 instructions -> print assembly
+
+```gdb
+(gdb) x/200i $pc
+```
+
+#### Breakpoint
+
+```gdb
+(gdb) break *0x1b8
+```
+
+#### Finding your code instruction
+
+you can set an additional jump to main: after initializing the screen and using the previous code to dump asm, find the instruction where main starts. There won't be much jmp instructions in the code 
+
+```diff
+diff --git a/sap/program.asm b/sap/program.asm
+index 2e1070f..9b591f1 100644
+--- a/sap/program.asm
++++ b/sap/program.asm
+@@ -11,7 +11,8 @@
+ start:
+     ; Inicializace displeje
+     call init_disp
+-    
++    jmp main
++main:
+     ; *** ZDE muzeme psat nase instrukce
+     ldi r16, '0'    ; znak
+     ldi r17, 0      ; pozice (0x00-0x0f - prvni radek; 0x40-0x4f - druhy radek)
+
+```
+
+#### Continue until breakpoint
+
+```gdb
+(gdb) c
+```
+
+#### Next instruction
+
+```gdb
+(gdb) ni
 ```
 
 ## macOS
