@@ -127,7 +127,7 @@ avr-gdb -q -ex 'target remote 127.0.0.1:1234'
 
 #### Finding your code instruction
 
-you can set an additional jump to main: after initializing the screen and using the previous code to dump asm, find the instruction where main starts. There won't be much jmp instructions in the code 
+you can set an additional jump to code part you want to breakpoint. After initializing the screen and using the previous code to dump asm, find the instruction where brk starts. There won't be much jmp instructions in the code. 
 
 ```diff
 diff --git a/sap/program.asm b/sap/program.asm
@@ -139,8 +139,8 @@ index 2e1070f..9b591f1 100644
      ; Inicializace displeje
      call init_disp
 -    
-+    jmp main
-+main:
++    jmp brk
++brk:
      ; *** ZDE muzeme psat nase instrukce
      ldi r16, '0'    ; znak
      ldi r17, 0      ; pozice (0x00-0x0f - prvni radek; 0x40-0x4f - druhy radek)
