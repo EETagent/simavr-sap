@@ -98,7 +98,6 @@ avr-gdb -q -n -ex 'target remote 127.0.0.1:1234'
 
 <img width="1091" alt="gdb Dashboard" src="https://github.com/EETagent/simavr-sap/assets/20557318/ceb9eec7-b2b9-4904-8a74-2911b335f9b3">
 
-
 ### Setup
 
 ```sh
@@ -179,6 +178,14 @@ cd sap
 make
 make run
 
+```
+
+### macOS arm64 avr-gdb build
+
+https://mirrors.ocf.berkeley.edu/gnu/gdb/ (latest is 14.2 atm)
+
+```sh
+./configure --target=avr --prefix=/Users/xxx/bin/avr-gdb/ --disable-debug  --disable-dependency-tracking --disable-binutils --disable-nls  --disable-libssp --disable-install-libbfd --disable-install-libiberty --with-python=/opt/homebrew/opt/python@3.12/bin/python3.12 --with-gmp=/opt/homebrew/opt/gmp/ --with-mpfr=/opt/homebrew/opt/mpfr/
 ```
 
 ### Tools
